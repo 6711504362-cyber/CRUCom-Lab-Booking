@@ -1,3 +1,12 @@
+const firebaseConfig = {
+    apiKey: "AIzaSyDCGsQG3KVzDqgGiEjjEkKTx0ivxodq6hk",
+    authDomain: "crucom-labbooking.firebaseapp.com",
+    projectId: "crucom-labbooking",
+    storageBucket: "crucom-labbooking.firebasestorage.app",
+    messagingSenderId: "711907001974",
+    appId: "1:711907001974:web:2d3dd8eaba845ea3094157",
+    measurementId: "G-RBZSYQP77R"
+};
 // ===================== STATE =====================
 let currentPage = 'login';
 let currentUser = null;
