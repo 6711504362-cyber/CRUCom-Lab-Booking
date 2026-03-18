@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="th" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resource Booking</title>
+    
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+    <script src="/_sdk/element_sdk.js"></script>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Noto+Sans+Thai:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-full">
+    <div id="app" class="h-full w-full dreamy-bg overflow-auto scrollbar-hide">
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        
+        <div id="toast-container"></div>
+
+        <div id="page-login" class="h-full w-full flex items-center justify-center p-4" style="display:flex;">
+            <div class="glass-card rounded-3xl p-8 md:p-10 w-full max-w-md relative animate-scale-in">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center shadow-lg animate-fade-in-up">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-white"></i>
+                    </div>
+                    <h1 id="login-title" class="text-2xl font-bold text-gray-800 animate-fade-in-up delay-1">Smart Resource Booking</h1>
+                    <p id="login-welcome" class="text-gray-500 mt-2 text-sm animate-fade-in-up delay-2">Welcome Back, Dreamer ✨</p>
+                </div>
+                <form id="login-form" class="space-y-5" onsubmit="return false;">
+                    <div class="animate-fade-in-up delay-2">
+                        <label for="login-sid" class="block text-sm font-medium text-gray-600 mb-1.5">รหัสนักศึกษา</label>
+                        <div class="relative">
+                            <i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                            <input id="login-sid" type="text" placeholder="เช่น 65012345" class="input-dreamy w-full pl-10 pr-4 py-3 rounded-xl text-sm" required>
+                        </div>
+                    </div>
+                    <div class="animate-fade-in-up delay-3">
+                        <label for="login-pass" class="block text-sm font-medium text-gray-600 mb-1.5">รหัสผ่าน</label>
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                            <input id="login-pass" type="password" placeholder="••••••••" class="input-dreamy w-full pl-10 pr-4 py-3 rounded-xl text-sm" required>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between animate-fade-in-up delay-4">
+                        <label class="flex items-center gap-2 cursor-pointer"> 
+                            <input type="checkbox" class="w-4 h-4 rounded accent-amber-400"> 
+                            <span class="text-xs text-gray-500">จดจำฉัน</span> 
+                        </label> 
+                        <button type="button" class="text-xs text-amber-500 hover:text-amber-600 transition">ลืมรหัสผ่าน?</button>
+                    </div>
+                    <button type="submit" id="btn-login" class="btn-golden w-full py-3.5 rounded-xl text-white font-semibold text-sm shadow-lg animate-fade-in-up delay-5"> เข้าสู่ระบบ </button>
+                </form>
+                <p class="text-center text-xs text-gray-400 mt-6 animate-fade-in-up delay-6">ยังไม่มีบัญชี? <button id="goto-register" type="button" class="text-amber-500 font-semibold hover:text-amber-600 transition">ลงทะเบียน</button></p>
+            </div>
+        </div>
+
+        <div id="page-register" class="h-full w-full flex items-center justify-center p-4" style="display:none;">
+            <div class="glass-card rounded-3xl p-8 md:p-10 w-full max-w-lg relative animate-scale-in">
+                <div class="text-center mb-7">
+                    <div class="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-violet-300 to-amber-300 flex items-center justify-center shadow-lg">
+                        <i data-lucide="user-plus" class="w-7 h-7 text-white"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold text-gray-800">สร้างบัญชีใหม่</h1>
+                    <p class="text-gray-500 mt-1 text-sm">เริ่มต้นจองทรัพยากรการเรียนรู้ 🌸</p>
+                </div>
+                <form id="register-form" class="space-y-4" onsubmit="return false;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="animate-fade-in-up delay-1">
+                            <label for="reg-sid" class="block text-sm font-medium text-gray-600 mb-1">รหัสนักศึกษา</label>
+                            <div class="relative">
+                                <i data-lucide="hash" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                                <input id="reg-sid" type="text" placeholder="65012345" class="input-dreamy w-full pl-9 pr-3 py-2.5 rounded-xl text-sm" required>
+                            </div>
+                        </div>
+                        <div class="animate-fade-in-up delay-2">
+                            <label for="reg-name" class="block text-sm font-medium text-gray-600 mb-1">ชื่อ-นามสกุล</label>
+                            <div class="relative">
+                                <i data-lucide="smile" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                                <input id="reg-name" type="text" placeholder="สมชาย ใจดี" class="input-dreamy w-full pl-9 pr-3 py-2.5 rounded-xl text-sm" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="animate-fade-in-up delay-3">
+                            <label for="reg-major" class="block text-sm font-medium text-gray-600 mb-1">สาขาวิชา</label>
+                            <div class="relative">
+                                <i data-lucide="book-open" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                                <select id="reg-major" class="input-dreamy w-full pl-9 pr-3 py-2.5 rounded-xl text-sm appearance-none" required> 
+                                    <option value="">เลือกสาขา</option> 
+                                    <option>วิทยาการคอมพิวเตอร์</option> 
+                                    <option>วิศวกรรมซอฟต์แวร์</option> 
+                                    <option>เทคโนโลยีสารสนเทศ</option> 
+                                    <option>วิทยาศาสตร์ข้อมูล</option> 
+                                    <option>ปัญญาประดิษฐ์</option> 
+                                </select>
+                            </div>
+                        </div>
+                        <div class="animate-fade-in-up delay-4">
+                            <label for="reg-email" class="block text-sm font-medium text-gray-600 mb-1">อีเมล</label>
+                            <div class="relative">
+                                <i data-lucide="mail" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                                <input id="reg-email" type="email" placeholder="somchai@uni.ac.th" class="input-dreamy w-full pl-9 pr-3 py-2.5 rounded-xl text-sm" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="animate-fade-in-up delay-5">
+                        <label for="reg-pass" class="block text-sm font-medium text-gray-600 mb-1">รหัสผ่าน</label>
+                        <div class="relative">
+                            <i data-lucide="lock" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-400"></i> 
+                            <input id="reg-pass" type="password" placeholder="อย่างน้อย 6 ตัวอักษร" class="input-dreamy w-full pl-9 pr-3 py-2.5 rounded-xl text-sm" required minlength="6">
+                        </div>
+                    </div>
+                    <div class="animate-fade-in-up delay-5">
+                        <label class="block text-sm font-medium text-gray-600 mb-1">อัปโหลดบัตรนักศึกษา</label>
+                        <div id="upload-zone" class="upload-zone rounded-xl p-6 text-center cursor-pointer">
+                            <i data-lucide="upload-cloud" class="w-8 h-8 mx-auto text-amber-300 mb-2"></i>
+                            <p class="text-xs text-gray-400">คลิกหรือลากไฟล์มาวางที่นี่</p>
+                            <p id="upload-filename" class="text-xs text-amber-500 mt-1 font-medium hidden"></p>
+                        </div>
+                        <input type="file" id="file-upload" class="hidden" accept="image/*">
+                    </div>
+                    <button type="submit" id="btn-register" class="btn-golden w-full py-3 rounded-xl text-white font-semibold text-sm shadow-lg animate-fade-in-up delay-6"> ลงทะเบียน </button>
+                </form>
+                <p class="text-center text-xs text-gray-400 mt-5">มีบัญชีอยู่แล้ว? <button id="goto-login" type="button" class="text-amber-500 font-semibold hover:text-amber-600 transition">เข้าสู่ระบบ</button></p>
+            </div>
+        </div>
+
+        <div id="page-dashboard" class="h-full w-full" style="display:none;">
+            <nav class="glass-card border-b border-white/30 px-4 md:px-8 py-3 flex items-center justify-between sticky top-0 z-50" style="animation:none;box-shadow:0 4px 20px rgba(0,0,0,0.04);">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-white"></i>
+                    </div>
+                    <span id="nav-title" class="font-bold text-gray-800 text-sm md:text-base">Smart Resource Booking</span>
+                </div>
+                <div class="hidden md:flex items-center gap-6">
+                    <button class="nav-item text-sm text-gray-600 font-medium active" onclick="showDashTab('resources')"> <i data-lucide="cpu" class="w-4 h-4 inline mr-1"></i>อุปกรณ์ </button> 
+                    <button class="nav-item text-sm text-gray-600 font-medium" onclick="showDashTab('rooms')"> <i data-lucide="door-open" class="w-4 h-4 inline mr-1"></i>ห้องเรียน </button> 
+                    <button class="nav-item text-sm text-gray-600 font-medium" onclick="showDashTab('mybookings')"> <i data-lucide="calendar-check" class="w-4 h-4 inline mr-1"></i>การจองของฉัน </button>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="relative p-2 rounded-xl hover:bg-amber-50 transition"> 
+                        <i data-lucide="bell" class="w-5 h-5 text-gray-500"></i> 
+                        <span class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-400 rounded-full text-[10px] text-white flex items-center justify-center">2</span> 
+                    </button> 
+                    <button id="btn-logout" class="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-red-50 transition text-sm text-gray-500"> 
+                        <i data-lucide="log-out" class="w-4 h-4"></i> <span class="hidden md:inline">ออก</span> 
+                    </button>
+                </div>
+            </nav>
+
+            <div class="md:hidden flex justify-around py-2 px-2 glass-card border-b border-white/20" style="animation:none;box-shadow:none;">
+                <button class="nav-item text-xs text-gray-600 font-medium active flex flex-col items-center gap-0.5 px-3 py-1" onclick="showDashTab('resources')"> <i data-lucide="cpu" class="w-4 h-4"></i>อุปกรณ์ </button> 
+                <button class="nav-item text-xs text-gray-600 font-medium flex flex-col items-center gap-0.5 px-3 py-1" onclick="showDashTab('rooms')"> <i data-lucide="door-open" class="w-4 h-4"></i>ห้องเรียน </button> 
+                <button class="nav-item text-xs text-gray-600 font-medium flex flex-col items-center gap-0.5 px-3 py-1" onclick="showDashTab('mybookings')"> <i data-lucide="calendar-check" class="w-4 h-4"></i>การจอง </button>
+            </div>
+            
+            <div class="p-4 md:p-8 max-w-6xl mx-auto">
+                <div class="glass-card rounded-2xl p-5 md:p-6 mb-6 animate-fade-in-up" style="animation-name:fadeInUp;box-shadow:0 8px 32px rgba(251,191,36,0.08);">
+                    <div class="flex items-center justify-between flex-wrap gap-3">
+                        <div>
+                            <h2 id="dash-welcome" class="text-lg md:text-xl font-bold text-gray-800">สวัสดีครับ! 🌤️</h2>
+                            <p class="text-sm text-gray-500 mt-1">วันนี้อยากจองอะไรดี?</p>
+                        </div>
+                        <div class="flex items-center gap-3 text-sm">
+                            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-green-50 border border-green-100"><span class="status-dot status-available"></span> <span class="text-green-700 font-medium">ว่าง</span></div>
+                            <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-red-50 border border-red-100"><span class="status-dot status-inuse"></span> <span class="text-red-600 font-medium">ไม่ว่าง</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-resources">
+                    <h3 id="dash-title" class="text-base font-bold text-gray-700 mb-4 animate-fade-in-up delay-1">🤖 อุปกรณ์การเรียนรู้</h3>
+                    <div id="resource-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6"></div>
+                </div>
+
+                <div id="tab-rooms" style="display:none;">
+                    <h3 class="text-base font-bold text-gray-700 mb-4 animate-fade-in-up">🏫 ห้องเรียน</h3>
+                    <div id="room-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6"></div>
+                </div>
+
+                <div id="tab-mybookings" style="display:none;">
+                    <h3 class="text-base font-bold text-gray-700 mb-4 animate-fade-in-up">📋 การจองของฉัน</h3>
+                    <div id="my-bookings-list" class="space-y-3">
+                        <div class="text-center py-12 text-gray-400 text-sm"><i data-lucide="inbox" class="w-12 h-12 mx-auto mb-3 text-gray-300"></i> ยังไม่มีการจอง</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="booking-modal" class="fixed inset-0 z-[999] flex items-center justify-center p-4" style="display:none;">
+            <div class="modal-overlay absolute inset-0" onclick="closeModal()"></div>
+            <div class="glass-card rounded-3xl p-6 md:p-8 w-full max-w-md relative z-10 animate-scale-in" style="animation-name:scaleIn;box-shadow:0 20px 60px rgba(0,0,0,0.1);">
+                <button onclick="closeModal()" class="absolute top-4 right-4 p-1 rounded-lg hover:bg-gray-100 transition"> <i data-lucide="x" class="w-5 h-5 text-gray-400"></i> </button>
+                <h3 id="modal-title" class="text-lg font-bold text-gray-800 mb-1">จองอุปกรณ์</h3>
+                <p id="modal-subtitle" class="text-sm text-gray-500 mb-5"></p>
+                
+                <div class="mb-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <button onclick="changeMonth(-1)" class="p-1 rounded-lg hover:bg-amber-50 transition"> <i data-lucide="chevron-left" class="w-5 h-5 text-gray-500"></i> </button> 
+                        <span id="calendar-month" class="text-sm font-semibold text-gray-700"></span> 
+                        <button onclick="changeMonth(1)" class="p-1 rounded-lg hover:bg-amber-50 transition"> <i data-lucide="chevron-right" class="w-5 h-5 text-gray-500"></i> </button>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1 text-center text-xs mb-1">
+                        <span class="text-gray-400 font-medium py-1">อา</span> <span class="text-gray-400 font-medium py-1">จ</span> <span class="text-gray-400 font-medium py-1">อ</span> <span class="text-gray-400 font-medium py-1">พ</span> <span class="text-gray-400 font-medium py-1">พฤ</span> <span class="text-gray-400 font-medium py-1">ศ</span> <span class="text-gray-400 font-medium py-1">ส</span>
+                    </div>
+                    <div id="calendar-grid" class="grid grid-cols-7 gap-1 text-center text-xs"></div>
+                </div>
+                
+                <div class="mb-5">
+                    <p class="text-sm font-medium text-gray-600 mb-2">เลือกช่วงเวลา</p>
+                    <div id="time-slots" class="grid grid-cols-3 gap-2"></div>
+                </div>
+                <button id="btn-confirm-book" onclick="confirmBooking()" class="btn-golden w-full py-3 rounded-xl text-white font-semibold text-sm shadow-lg" disabled> ยืนยันการจอง </button>
+            </div>
+        </div>
+
+        <div id="delete-confirm" class="fixed inset-0 z-[999] flex items-center justify-center p-4" style="display:none;">
+            <div class="modal-overlay absolute inset-0" onclick="closeDeleteConfirm()"></div>
+            <div class="glass-card rounded-2xl p-6 w-full max-w-sm relative z-10 animate-scale-in text-center" style="animation-name:scaleIn;box-shadow:0 20px 60px rgba(0,0,0,0.1);">
+                <i data-lucide="alert-triangle" class="w-10 h-10 mx-auto mb-3 text-amber-400"></i>
+                <h3 class="text-base font-bold text-gray-800 mb-1">ยกเลิกการจอง?</h3>
+                <p id="delete-confirm-text" class="text-sm text-gray-500 mb-5"></p>
+                <div class="flex gap-3">
+                    <button onclick="closeDeleteConfirm()" class="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-medium text-gray-600 hover:bg-gray-50 transition">ไม่ใช่</button> 
+                    <button id="btn-confirm-delete" onclick="executeDelete()" class="flex-1 py-2.5 rounded-xl bg-red-400 text-white text-sm font-medium hover:bg-red-500 transition">ยืนยัน</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
